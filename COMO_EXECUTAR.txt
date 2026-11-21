@@ -1,0 +1,13 @@
+Calculadora de média
+
+Extraia todos os arquivos do pacote aprovado para uma pasta.
+Abra o PowerShell nessa pasta e execute os comandos abaixo.
+
+# Executa a aplicação interativa. media.py é o arquivo de entrada.
+python .\media.py
+
+Digite 6 e pressione Enter. Depois digite 8 e pressione Enter.
+O resultado esperado é Média: 7.
+
+# Executa com as notas de um arquivo. --arquivo recebe o caminho do JSON.
+python .\media.py --arquivo .\notas.json

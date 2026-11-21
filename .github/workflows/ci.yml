@@ -1,0 +1,33 @@
+# Este arquivo deve ficar em .github/workflows/ci.yml na raiz do repositório.
+name: Testes e artefato da media
+
+# push executa após envio de commits. pull_request verifica propostas de integração.
+# workflow_dispatch permite uma execução manual pela aba Actions.
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  verificar-e-construir:
+    runs-on: ubuntu-latest
+    steps:
+      # Disponibiliza o conteúdo da revisão do repositório no runner.
+      - name: Obter o codigo
+        uses: actions/checkout@v6
+      # Seleciona a versão do Python utilizada nesta execução.
+      - name: Preparar Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      # Um código de saída diferente de zero interrompe as etapas seguintes.
+      - name: Testar e construir
+        run: python pipeline.py
+      # Esta etapa só executa se as anteriores concluírem com sucesso.
+      - name: Disponibilizar o artefato aprovado
+        uses: actions/upload-artifact@v4
+        with:
+          name: media-aprovada
+          path: dist/media_aprovada.zip
+          if-no-files-found: error
+          retention-days: 7
